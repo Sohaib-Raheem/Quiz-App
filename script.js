@@ -68,9 +68,11 @@ function showQuestion() {
     document.querySelector(".question-box").innerHTML = `
       <h2>🎉 Quiz Finished!</h2>
       <p>Your final score: <strong>${score}</strong> / ${totalQuestions * 10}</p>
-      `
-      
-    
+      <div class="end-buttons">
+        <button onclick="restartQuiz()" class="options">🔄 Restart</button>
+        <button onclick="quitQuiz()" class="options">❌ Quit</button>
+      </div>
+    `
     progressBar.style.width = "100%"
     return
   }
@@ -99,7 +101,7 @@ function checkCorrect(event) {
   var clicked = event.target
   var correct = arsenalQuiz[currentQuestion].correctAnswer
 
-  // disable all clicks after one selection
+  
   for (var i = 0; i < quizOption.children.length; i++) {
     quizOption.children[i].onclick = null
   }
@@ -120,7 +122,22 @@ function checkCorrect(event) {
   nextButton.disabled = false
 }
 
-showQuestion()
 
+function restartQuiz() {
+  currentQuestion = 0
+  score = 0
+  quizScore.innerHTML = "Score: 0"
+  progressBar.style.width = "0%"
+  showQuestion()
+}
+
+
+function quitQuiz() {
+  document.querySelector(".question-box").innerHTML = `
+    <h2>❌ Quiz Ended</h2>
+    <p>Thanks for playing the Arsenal Quiz! ⚽</p>
+  `
+  progressBar.style.width = "100%"
+}
 
     
