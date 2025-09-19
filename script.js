@@ -3,10 +3,12 @@ var quizOption = document.getElementById("option-list");
 var currentQuestion = 0;
 var score = 0;
 var quizScore = document.getElementById("score");
-let currentSelection = null;
 let nextButton = document.getElementById("next-btn");
 let progressBar = document.getElementById("progress");
 let questionNumber = document.getElementById("question-number");
+
+// User answers ko store karne ke liye
+let userAnswers = [];
 
 const arsenalQuiz = [
   {
@@ -63,9 +65,6 @@ const arsenalQuiz = [
 
 const totalQuestions = arsenalQuiz.length;
 
-// User answers store karenge
-let userAnswers = [];
-
 function showQuestion() {
   if (currentQuestion >= totalQuestions) {
     showResult();
@@ -79,71 +78,70 @@ function showQuestion() {
   quizOption.innerHTML = "";
   for (var i = 0; i < arsenalQuiz[currentQuestion].options.length; i++) {
     quizOption.innerHTML += `
-      <li onclick="selectOption(event)">
+      <li onclick="selectOption(event)" class="non-active">
         <button class="options">${arsenalQuiz[currentQuestion].options[i]}</button>
       </li>`;
   }
 
-  currentSelection = null;
-  nextButton.disabled = true;
-  progressBar.style.width = (currentQuestion / totalQuestions) * 100 + "%";
+  nextButton.disabled = false;
+  progressBar.style.width = ((currentQuestion) / totalQuestions * 100) + "%";
 }
 
 function selectOption(event) {
-  // pehle remove old selection
-  let allOptions = quizOption.querySelectorAll("li");
-  allOptions.forEach((li) => li.classList.remove("selected"));
-
-  // naya add karo
-  event.currentTarget.classList.add("selected");
-  currentSelection = event.currentTarget.innerText.trim();
-  nextButton.disabled = false;
+  let clicked = event.target;
+  // sabse pehle sab options se selected class hatao
+  for (var i = 0; i < quizOption.children.length; i++) {
+    quizOption.children[i].classList.remove("selected");
+  }
+  // clicked option select karo
+  clicked.parentElement.classList.add("selected");
 }
 
 function goToNext() {
-  if (currentSelection) {
-    userAnswers.push({
-      question: arsenalQuiz[currentQuestion].question,
-      selected: currentSelection,
-      correct: arsenalQuiz[currentQuestion].correctAnswer
-    });
+  let selected = document.querySelector(".selected");
+  let chosenAnswer = selected ? selected.innerText : "Not answered";
 
-    if (currentSelection === arsenalQuiz[currentQuestion].correctAnswer) {
-      score += 10;
-    }
-  }
+  // userAnswers me store karo
+  userAnswers.push({
+    question: arsenalQuiz[currentQuestion].question,
+    selected: chosenAnswer,
+    correct: arsenalQuiz[currentQuestion].correctAnswer
+  });
 
   currentQuestion++;
   showQuestion();
 }
 
 function showResult() {
+  // score calculate karna
+  score = 0;
+  for (var i = 0; i < userAnswers.length; i++) {
+    if (userAnswers[i].selected === userAnswers[i].correct) {
+      score += 10;
+    }
+  }
+
   let resultHTML = `
     <h2>🎉 Quiz Finished!</h2>
-    <p>Your final score: <strong>${score}</strong> / ${
-    totalQuestions * 10
-  }</p>
+    <p>Your final score: <strong>${score}</strong> / ${totalQuestions * 10}</p>
     <h3>Review Answers:</h3>
     <ul class="review-list">
   `;
 
-  userAnswers.forEach((ans, index) => {
-    if (ans.selected === ans.correct) {
-      resultHTML += `<li>Q${index + 1}: ✅ Correct — <strong>${
-        ans.correct
-      }</strong></li>`;
+  for (var i = 0; i < userAnswers.length; i++) {
+    if (userAnswers[i].selected === userAnswers[i].correct) {
+      resultHTML += `<li class="correct">Q${i + 1}: ✅ Correct — <strong>${userAnswers[i].correct}</strong></li>`;
     } else {
-      resultHTML += `<li>Q${index + 1}: ❌ Wrong (You chose: <strong>${
-        ans.selected
-      }</strong>) | Correct: <strong>${ans.correct}</strong></li>`;
+      resultHTML += `<li class="wrong">Q${i + 1}: ❌ Wrong (You chose: <strong>${userAnswers[i].selected}</strong>) | Correct: <strong>${userAnswers[i].correct}</strong></li>`;
     }
-  });
+  }
 
   resultHTML += `</ul>
     <div class="end-buttons">
-      <button class="options" onclick="restartQuiz()">🔄 Restart</button>
-      <button class="options" onclick="quitQuiz()">❌ Quit</button>
-    </div>`;
+      <button onclick="restartQuiz()">Restart</button>
+      <button onclick="quitQuiz()">Quit</button>
+    </div>
+  `;
 
   document.querySelector(".question-box").innerHTML = resultHTML;
   progressBar.style.width = "100%";
@@ -153,16 +151,14 @@ function restartQuiz() {
   currentQuestion = 0;
   score = 0;
   userAnswers = [];
-  quizScore.innerHTML = "Score: 0";
   showQuestion();
 }
 
 function quitQuiz() {
   document.querySelector(".question-box").innerHTML = `
-    <h2>👋 Thanks for playing!</h2>
-    <p>Hope you enjoyed the Arsenal Quiz!</p>
+    <h2>👋 You quit the quiz!</h2>
+    <p>Thanks for playing.</p>
   `;
-  progressBar.style.width = "0%";
 }
 
 showQuestion();
