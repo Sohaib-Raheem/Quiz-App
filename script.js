@@ -3,7 +3,6 @@ var quizOption = document.getElementById("option-list")
 var currentQuestion = 0
 var score = 0
 var quizScore = document.getElementById("score")
-let currentSelection = null
 let nextButton = document.getElementById("next-btn")
 let progressBar = document.getElementById("progress")
 let questionNumber = document.getElementById("question-number")
@@ -60,23 +59,27 @@ const arsenalQuiz = [
     correctAnswer: "1930"
   }
 ];
-const totalQuestions = arsenalQuiz.length
 
+const totalQuestions = arsenalQuiz.length
 
 function showQuestion() {
   if (currentQuestion >= totalQuestions) {
-    document.querySelector(".question-box").innerHTML = `
-      <h2>🎉 Quiz Finished!</h2>
+    // Show result
+    quizQuestion.innerHTML = "🎉 Quiz Finished!"
+    quizOption.innerHTML = `
       <p>Your final score: <strong>${score}</strong> / ${totalQuestions * 10}</p>
       <div class="end-buttons">
         <button onclick="restartQuiz()" class="options">🔄 Restart</button>
         <button onclick="quitQuiz()" class="options">❌ Quit</button>
       </div>
     `
+    questionNumber.innerHTML = ""
     progressBar.style.width = "100%"
+    nextButton.style.display = "none"
     return
   }
 
+  // Show normal question
   quizQuestion.innerHTML = arsenalQuiz[currentQuestion].question
   questionNumber.innerHTML = "Question " + (currentQuestion + 1) + " of " + totalQuestions
 
@@ -89,6 +92,7 @@ function showQuestion() {
   }
 
   nextButton.disabled = true
+  nextButton.style.display = "inline-block"
   progressBar.style.width = ((currentQuestion) / totalQuestions * 100) + "%"
 }
 
@@ -101,7 +105,7 @@ function checkCorrect(event) {
   var clicked = event.target
   var correct = arsenalQuiz[currentQuestion].correctAnswer
 
-  
+  // disable all clicks after one selection
   for (var i = 0; i < quizOption.children.length; i++) {
     quizOption.children[i].onclick = null
   }
@@ -122,7 +126,7 @@ function checkCorrect(event) {
   nextButton.disabled = false
 }
 
-
+// Restart Quiz
 function restartQuiz() {
   currentQuestion = 0
   score = 0
@@ -131,13 +135,14 @@ function restartQuiz() {
   showQuestion()
 }
 
-
+// Quit Quiz
 function quitQuiz() {
-  document.querySelector(".question-box").innerHTML = `
-    <h2>❌ Quiz Ended</h2>
-    <p>Thanks for playing the Arsenal Quiz! ⚽</p>
-  `
+  quizQuestion.innerHTML = "❌ Quiz Ended"
+  quizOption.innerHTML = `<p>Thanks for playing the Arsenal Quiz! ⚽</p>`
+  questionNumber.innerHTML = ""
+  nextButton.style.display = "none"
   progressBar.style.width = "100%"
 }
-showQuestion();
-    
+
+// Start quiz on page load
+showQuestion()
