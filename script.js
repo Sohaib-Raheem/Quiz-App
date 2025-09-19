@@ -139,5 +139,5 @@ function quitQuiz() {
   `
   progressBar.style.width = "100%"
 }
-
+showQuestion();
     
