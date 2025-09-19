@@ -1,11 +1,11 @@
-var quizQuestion = document.getElementById("question-text")
-var quizOption = document.getElementById("option-list")
-var currentQuestion = 0
-var score = 0
-var quizScore = document.getElementById("score")
-let nextButton = document.getElementById("next-btn")
-let progressBar = document.getElementById("progress")
-let questionNumber = document.getElementById("question-number")
+var quizQuestion = document.getElementById("question-text");
+var quizOption = document.getElementById("option-list");
+var currentQuestion = 0;
+var score = 0;
+let selectedAnswer = null;
+let nextButton = document.getElementById("next-btn");
+let progressBar = document.getElementById("progress");
+let questionNumber = document.getElementById("question-number");
 
 const arsenalQuiz = [
   {
@@ -60,86 +60,80 @@ const arsenalQuiz = [
   }
 ];
 
-const totalQuestions = arsenalQuiz.length
+const totalQuestions = arsenalQuiz.length;
 
 function showQuestion() {
   if (currentQuestion >= totalQuestions) {
-    // Show result
-    quizQuestion.innerHTML = "🎉 Quiz Finished!"
-    quizOption.innerHTML = `
-      <p>Your final score: <strong>${score}</strong> / ${totalQuestions * 10}</p>
+    document.querySelector(".question-box").innerHTML = `
+      <h2>🎉 Quiz Finished!</h2>
+      <p>Your final score: <strong>${score}</strong> / ${totalQuestions}</p>
       <div class="end-buttons">
-        <button onclick="restartQuiz()" class="options">🔄 Restart</button>
-        <button onclick="quitQuiz()" class="options">❌ Quit</button>
+        <button class="options" onclick="restartQuiz()">Restart</button>
+        <button class="options" onclick="quitQuiz()">Quit</button>
       </div>
-    `
-    questionNumber.innerHTML = ""
-    progressBar.style.width = "100%"
-    nextButton.style.display = "none"
-    return
+    `;
+    progressBar.style.width = "100%";
+    return;
   }
 
-  // Show normal question
-  quizQuestion.innerHTML = arsenalQuiz[currentQuestion].question
-  questionNumber.innerHTML = "Question " + (currentQuestion + 1) + " of " + totalQuestions
+  quizQuestion.innerHTML = arsenalQuiz[currentQuestion].question;
+  questionNumber.innerHTML =
+    "Question " + (currentQuestion + 1) + " of " + totalQuestions;
 
-  quizOption.innerHTML = ""
+  quizOption.innerHTML = "";
+  selectedAnswer = null; // reset selection
+
   for (var i = 0; i < arsenalQuiz[currentQuestion].options.length; i++) {
     quizOption.innerHTML += `
-      <li onclick="checkCorrect(event)" class="non-active">
+      <li onclick="selectOption(event)" class="non-active">
         <button class="options">${arsenalQuiz[currentQuestion].options[i]}</button>
-      </li>`
+      </li>`;
   }
 
-  nextButton.disabled = true
-  nextButton.style.display = "inline-block"
-  progressBar.style.width = ((currentQuestion) / totalQuestions * 100) + "%"
+  nextButton.disabled = false;
+  progressBar.style.width = (currentQuestion / totalQuestions) * 100 + "%";
+}
+
+function selectOption(event) {
+  let clicked = event.target;
+  selectedAnswer = clicked.innerText;
+
+  // remove old selection
+  for (var i = 0; i < quizOption.children.length; i++) {
+    quizOption.children[i].classList.remove("selected");
+  }
+  clicked.parentElement.classList.add("selected");
 }
 
 function goToNext() {
-  currentQuestion++
-  showQuestion()
-}
-
-function checkCorrect(event) {
-  var clicked = event.target
-  var correct = arsenalQuiz[currentQuestion].correctAnswer
-
-  // ✅ remove old selected highlight
-  for (var i = 0; i < quizOption.children.length; i++) {
-    quizOption.children[i].classList.remove("selected")
-    quizOption.children[i].onclick = null // disable further clicks
+  if (selectedAnswer === null) {
+    alert("Please select an option before continuing!");
+    return;
   }
 
-  // ✅ just highlight selected option
-  clicked.parentElement.classList.add("selected")
-
-  // ✅ update score (background mein)
-  if (clicked.innerText == correct) {
-    score += 10
+  let correct = arsenalQuiz[currentQuestion].correctAnswer;
+  if (selectedAnswer === correct) {
+    score++;
   }
 
-  quizScore.innerHTML = "Score: " + score
-  nextButton.disabled = false
+  currentQuestion++;
+  showQuestion();
 }
 
-// Restart Quiz
 function restartQuiz() {
-  currentQuestion = 0
-  score = 0
-  quizScore.innerHTML = "Score: 0"
-  progressBar.style.width = "0%"
-  showQuestion()
+  currentQuestion = 0;
+  score = 0;
+  showQuestion();
 }
 
-// Quit Quiz
 function quitQuiz() {
-  quizQuestion.innerHTML = "❌ Quiz Ended"
-  quizOption.innerHTML = `<p>Thanks for playing the Arsenal Quiz! ⚽</p>`
-  questionNumber.innerHTML = ""
-  nextButton.style.display = "none"
-  progressBar.style.width = "100%"
+  document.querySelector(".question-box").innerHTML = `
+    <h2>❌ You Quit the Quiz!</h2>
+    <p>Better luck next time!</p>
+    <div class="end-buttons">
+      <button class="options" onclick="restartQuiz()">Restart</button>
+    </div>
+  `;
 }
 
-// Start quiz on page load
-showQuestion()
+showQuestion();
