@@ -149,20 +149,27 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
-.selected {
-  background-color: #ddd;   /* halka grey */
+/*.selected {
+  background-color: #ddd;   /* halka grey 
   border-radius: 8px;
   }
 .correct button {
-  background: #28a745 !important; /* Green */
+  background: #28a745 !important; /* Green 
   color: #fff !important;
   border-color: #28a745 !important;
 }
 
 .wrong button {
-  background: #dc3545 !important; /* Red */
+  background: #dc3545 !important; /* Red 
   color: #fff !important;
   border-color: #dc3545 !important;
+}*/
+/* Selected option style */
+#option-list li.selected {
+  border: 2px solid #c00000;   /* Arsenal Red border */
+  background: #ffe5e5;         /* Light red shade background */
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
 /* Next button */
