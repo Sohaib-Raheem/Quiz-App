@@ -7,7 +7,7 @@ let currentSelection = null
 let nextButton = document.getElementById("next-btn")
 let progressBar = document.getElementById("progress")
 let questionNumber = document.getElementById("question-number")
-var isPlay=true;
+
 const arsenalQuiz = [
   {
     question: "In which city is Arsenal Football Club based?",
@@ -61,15 +61,15 @@ const arsenalQuiz = [
   }
 ];
 const totalQuestions = arsenalQuiz.length
-do{
+
 
 function showQuestion() {
   if (currentQuestion >= totalQuestions) {
     document.querySelector(".question-box").innerHTML = `
       <h2>🎉 Quiz Finished!</h2>
       <p>Your final score: <strong>${score}</strong> / ${totalQuestions * 10}</p>
-      <button onclick="playAgain()" id="again-btn"> Play Again </button>`
-      isPlay=confirm("do u want to play again")
+      `
+      
     
     progressBar.style.width = "100%"
     return
@@ -121,6 +121,6 @@ function checkCorrect(event) {
 }
 
 showQuestion()
-} while(isPlay);
+
 
     
