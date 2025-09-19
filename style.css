@@ -149,6 +149,10 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
+.selected {
+  background-color: #ddd;   /* halka grey */
+  border-radius: 8px;
+  }
 .correct button {
   background: #28a745 !important; /* Green */
   color: #fff !important;
@@ -183,6 +187,42 @@ body {
 .next-btn button:hover {
   background: linear-gradient(90deg, #ff1a1a, #c00000);
   transform: scale(1.05);
+}
+.end-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.end-buttons .options {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Restart Button (Green) */
+.end-buttons .options:nth-child(1) {
+  background-color: #28a745;
+  color: white;
+}
+
+.end-buttons .options:nth-child(1):hover {
+  background-color: #218838;
+}
+
+/* Quit Button (Red) */
+.end-buttons .options:nth-child(2) {
+  background-color: #dc3545;
+  color: white;
+}
+
+.end-buttons .options:nth-child(2):hover {
+  background-color: #a71d2a;
 }
 
 /* Fade-in animation */
