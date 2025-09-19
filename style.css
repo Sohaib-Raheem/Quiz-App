@@ -84,39 +84,7 @@ body {
   line-height: 1.4;
 }
 
-/* Options 
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  justify-content: center;
-  margin-bottom: 25px;
-  list-style: none;
-  padding: 0;
-}*/
-/* Options 
-.options {
-  display: grid;
-  grid-template-columns: repeat(2, auto); /* 2 columns 
-  justify-content: center;  /* Center horizontally 
-  gap: 18px;
-  margin-bottom: 25px;
-  list-style: none;
-  padding: 0;
-}
-.options button {
-  background: #fff;
-  color: #c00000;
-  border: 2px solid #c00000;
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-}*/
-/* Options */
+
 .options {
   display: grid;
   grid-template-columns: repeat(2, auto); /* 2 equal columns */
@@ -149,22 +117,8 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
-/*.selected {
-  background-color: #ddd;   /* halka grey 
-  border-radius: 8px;
-  }
-.correct button {
-  background: #28a745 !important; /* Green 
-  color: #fff !important;
-  border-color: #28a745 !important;
-}
 
-.wrong button {
-  background: #dc3545 !important; /* Red 
-  color: #fff !important;
-  border-color: #dc3545 !important;
-}*/
-/* Selected option style */
+
 #option-list li.selected {
   border: 2px solid #c00000;   /* Arsenal Red border */
   background: #ffe5e5;         /* Light red shade background */
@@ -195,6 +149,8 @@ body {
   background: linear-gradient(90deg, #ff1a1a, #c00000);
   transform: scale(1.05);
 }
+
+
 .end-buttons {
   display: flex;
   justify-content: center;
@@ -202,35 +158,37 @@ body {
   margin-top: 20px;
 }
 
-.end-buttons .options {
-  padding: 10px 20px;
+.end-buttons button {
+  padding: 12px 25px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease;
+  color: #fff;
 }
 
 /* Restart Button (Green) */
-.end-buttons .options:nth-child(1) {
+.restart-btn {
   background-color: #28a745;
-  color: white;
 }
 
-.end-buttons .options:nth-child(1):hover {
+.restart-btn:hover {
   background-color: #218838;
+  transform: scale(1.05);
 }
 
 /* Quit Button (Red) */
-.end-buttons .options:nth-child(2) {
+.quit-btn {
   background-color: #dc3545;
-  color: white;
 }
 
-.end-buttons .options:nth-child(2):hover {
+.quit-btn:hover {
   background-color: #a71d2a;
+  transform: scale(1.05);
 }
+
 
 /* Fade-in animation */
 @keyframes fadeIn {
