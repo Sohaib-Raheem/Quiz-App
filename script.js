@@ -23,6 +23,41 @@ const arsenalQuiz = [
     question: "In which year was Arsenal founded?",
     options: ["1886", "1901", "1899", "1878"],
     correctAnswer: "1886"
+  },
+  {
+    question: "How many years did Arsène Wenger manage Arsenal?",
+    options: ["10 years", "22 years", "15 years", "18 years"],
+    correctAnswer: "22 years"
+  },
+  {
+    question: "In which season did ‘The Invincibles’ go unbeaten in the league?",
+    options: ["2001-02", "2003-04", "2005-06", "1997-98"],
+    correctAnswer: "2003-04"
+  },
+  {
+    question: "How many goals did Thierry Henry score for Arsenal?",
+    options: ["175", "228", "200", "260"],
+    correctAnswer: "228"
+  },
+  {
+    question: "When did Arsenal win their first Premier League title?",
+    options: ["1992-93", "1997-98", "2001-02", "2003-04"],
+    correctAnswer: "1997-98"
+  },
+  {
+    question: "What are Arsenal’s traditional home kit colors?",
+    options: ["Blue and White", "Red and White", "Green and Yellow", "Black and Red"],
+    correctAnswer: "Red and White"
+  },
+  {
+    question: "Who holds the record for most appearances for Arsenal?",
+    options: ["Tony Adams", "David O’Leary", "Patrick Vieira", "Thierry Henry"],
+    correctAnswer: "David O’Leary"
+  },
+  {
+    question: "In which year did Arsenal win their first FA Cup?",
+    options: ["1930", "1945", "1952", "1927"],
+    correctAnswer: "1930"
   }
 ];
 
