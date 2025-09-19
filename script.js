@@ -105,21 +105,18 @@ function checkCorrect(event) {
   var clicked = event.target
   var correct = arsenalQuiz[currentQuestion].correctAnswer
 
-  // disable all clicks after one selection
+  // ✅ remove old selected highlight
   for (var i = 0; i < quizOption.children.length; i++) {
-    quizOption.children[i].onclick = null
+    quizOption.children[i].classList.remove("selected")
+    quizOption.children[i].onclick = null // disable further clicks
   }
 
+  // ✅ just highlight selected option
+  clicked.parentElement.classList.add("selected")
+
+  // ✅ update score (background mein)
   if (clicked.innerText == correct) {
-    clicked.parentElement.classList.add("correct")
     score += 10
-  } else {
-    clicked.parentElement.classList.add("wrong")
-    for (var i = 0; i < quizOption.children.length; i++) {
-      if (quizOption.children[i].innerText.includes(correct)) {
-        quizOption.children[i].classList.add("correct")
-      }
-    }
   }
 
   quizScore.innerHTML = "Score: " + score
