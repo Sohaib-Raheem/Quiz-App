@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz UI - Arsenal Theme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="quiz-container">
+    <!-- Header -->
+    <div class="quiz-header">
+      <h1>Quiz: Arsenal F.C.</h1>
+      <span id="score"></span>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-container">
+      <div class="progress-text">
+        <span id="question-number">Question 1 of 10</span>
+        <span>+10 points for correct</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+      </div>
+    </div>
+
+    <!-- Question -->
+    <div class="question-box">
+      <p id="question-text"></p>
+
+      <div class="options">
+        <ul id="option-list" class="options">
+          
+        </ul>
+       
+      </div>
+
+      <div class="next-btn">
+        <button id="next-btn" onclick="goToNext()" disabled>Next Question</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
