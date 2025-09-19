@@ -84,25 +84,28 @@ function showQuestion() {
       </li>`;
   }
 
-  nextButton.disabled = false;
+  // Next button disabled until selection
+  nextButton.disabled = true;
+
   progressBar.style.width =
     (currentQuestion / totalQuestions) * 100 + "%";
 }
 
-// Select Option (multiple changes allowed until NEXT)
+// Select Option
 function selectOption(event) {
   currentSelection = event.target.innerText;
+
+  // Enable Next button when option selected
+  nextButton.disabled = false;
 }
 
 // Next Question
 function goToNext() {
-  if (currentSelection) {
-    selectedAnswers[currentQuestion] = currentSelection;
-    if (currentSelection === arsenalQuiz[currentQuestion].correctAnswer) {
-      score += 10;
-    }
-  } else {
-    selectedAnswers[currentQuestion] = null; // skipped
+  if (!currentSelection) return; // Prevent going ahead without selection
+
+  selectedAnswers[currentQuestion] = currentSelection;
+  if (currentSelection === arsenalQuiz[currentQuestion].correctAnswer) {
+    score += 10;
   }
 
   currentSelection = null;
@@ -135,8 +138,8 @@ function showResult() {
         : `<p>🎉 Congratulations! All answers correct.</p>`
     }
     <div class="end-buttons">
-      <button onclick="restartQuiz()">Restart</button>
-      <button onclick="quitQuiz()">Quit</button>
+      <button class="restart-btn" onclick="restartQuiz()">Restart</button>
+      <button class="quit-btn" onclick="quitQuiz()">Quit</button>
     </div>
   `;
 
