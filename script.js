@@ -175,8 +175,8 @@ function restartQuiz() {
   if (resultBox) resultBox.remove();
 
   // Show quiz again
-  document.querySelector(".question-box").style.display = "block";
-  document.getElementById("option-list").style.display = "block";
+  document.querySelector(".question-box").style.display = "inline-block";
+  document.getElementById("option-list").style.display = "inline-block";
   nextButton.style.display = "inline-block";
 
   showQuestion();
