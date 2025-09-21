@@ -43,7 +43,6 @@ function showQuestion() {
   }
 
   nextButton.disabled = true;
-
   progressBar.style.width = ((currentQuestion) / totalQuestions) * 100 + "%";
 }
 
@@ -97,7 +96,10 @@ function showResult() {
     message = "🎉 Congratulations! Perfect score!";
   }
 
-  document.querySelector(".question-box").innerHTML = `
+  // Result UI (separate div create)
+  let resultBox = document.createElement("div");
+  resultBox.classList.add("result-box");
+  resultBox.innerHTML = `
     <h2>🎉 Quiz Finished!</h2>
     <p>Your final score: <strong>${score}</strong> / ${totalQuestions * 10}</p>
     <p>${message}</p>
@@ -112,8 +114,7 @@ function showResult() {
       <button class="quit-btn" onclick="quitQuiz()">Quit</button>
     </div>
   `;
-
-  document.querySelector(".question-box").style.display = "block";
+  document.body.appendChild(resultBox);
 }
 
 // Restart Quiz
@@ -123,23 +124,23 @@ function restartQuiz() {
   selectedAnswers = [];
   currentSelection = null;
 
+  // Remove result screen
+  let resultBox = document.querySelector(".result-box");
+  if (resultBox) resultBox.remove();
+
+  // Show quiz UI again
   document.querySelector(".question-box").style.display = "block";
   document.getElementById("option-list").style.display = "block";
   nextButton.style.display = "inline-block";
 
   progressBar.style.width = "0%";
-
-  document.querySelector(".question-box").innerHTML = `
-    <h2 id="question-text"></h2>
-    <div id="question-number"></div>
-  `;
-  
   showQuestion();
 }
 
 // Quit Quiz
 function quitQuiz() {
-  document.querySelector(".question-box").innerHTML = `
+  let resultBox = document.querySelector(".result-box");
+  if (resultBox) resultBox.innerHTML = `
     <h2>👋 You quit the quiz!</h2>
     <p>Thanks for playing.</p>
   `;
