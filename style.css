@@ -3,7 +3,7 @@ body {
   padding: 0;
   font-family: "Segoe UI", Arial, sans-serif;
   background: 
-    linear-gradient(200deg, #ffffff, #8a0000), /* Gradient */
+    linear-gradient(125deg, #ffffff, #8a0000), /* Gradient */
     url("arsenal-logo.png") no-repeat center center; /* Logo */
   background-size: cover, 250px auto; /* Gradient full, logo fixed size */
   display: flex;
