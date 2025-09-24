@@ -79,31 +79,28 @@ function showQuestion() {
   for (var i = 0; i < arsenalQuiz[currentQuestion].options.length; i++) {
     quizOption.innerHTML += `
       <li>
-        <button class="options" onclick="selectOption(event)">
+        <button class="option-btn" onclick="selectOption(event)">
           ${arsenalQuiz[currentQuestion].options[i]}
         </button>
       </li>`;
   }
 
-  // Next button disabled until selection
+  
   nextButton.disabled = true;
 
-  // Progress bar update (now correct)
   progressBar.style.width =
-    ((currentQuestion) / totalQuestions) * 100 + "%";
+    ((currentQuestion + 1) / totalQuestions) * 100 + "%";
 }
 
 // Select Option
 function selectOption(event) {
   currentSelection = event.target.innerText;
-
-  // Enable Next button when option selected
   nextButton.disabled = false;
 }
 
 // Next Question
 function goToNext() {
-  if (!currentSelection) return; // Prevent going ahead without selection
+  if (!currentSelection) return;
 
   selectedAnswers[currentQuestion] = currentSelection;
   if (currentSelection === arsenalQuiz[currentQuestion].correctAnswer) {
@@ -121,7 +118,6 @@ function showResult() {
   document.getElementById("option-list").style.display = "none";
   nextButton.style.display = "none";
 
-  // Feedback message based on score
   let feedback = "";
   if (score <= 30) {
     feedback = "😅 Keep practicing, you can do better!";
@@ -142,7 +138,6 @@ function showResult() {
     }
   }
 
-  // Create result box
   let resultBox = document.createElement("div");
   resultBox.classList.add("result-box");
   resultBox.innerHTML = `
@@ -170,13 +165,11 @@ function restartQuiz() {
   score = 0;
   selectedAnswers = [];
 
-  // Remove result box
   let resultBox = document.querySelector(".result-box");
   if (resultBox) resultBox.remove();
 
-  // Show quiz again
-  document.querySelector(".question-box").style.display = "inline-block";
-  document.getElementById("option-list").style.display = "inline-block";
+  document.querySelector(".question-box").style.display = "block";
+  document.getElementById("option-list").style.display = "grid"; 
   nextButton.style.display = "inline-block";
 
   showQuestion();
